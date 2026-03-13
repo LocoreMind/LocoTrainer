@@ -47,7 +47,7 @@ fi
 # Activate and install
 source "$VENV_PATH/bin/activate"
 echo "→ Installing vLLM (this may take several minutes)..."
-uv pip install vllm>=0.6.0 -q
+uv pip install vllm -q
 echo "→ Installing locotrainer..."
 uv pip install locotrainer -q
 
