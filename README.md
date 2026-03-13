@@ -6,6 +6,7 @@
 
 <div align="center">
 
+[![PyPI](https://img.shields.io/badge/PyPI-3775A9?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/locotrainer/)
 [![MODEL](https://img.shields.io/badge/Model-FFB300?style=for-the-badge&logo=huggingface&logoColor=white)](https://huggingface.co/LocoreMind/LocoTrainer-4B)
 [![GGUF](https://img.shields.io/badge/GGUF-FF6F00?style=for-the-badge&logo=huggingface&logoColor=white)](https://huggingface.co/LocoreMind/LocoTrainer-4B-GGUF)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/LocoreMind/LocoTrainer)
@@ -115,23 +116,34 @@ Evaluated on MS-SWIFT codebase analysis tasks across 3 test iterations.
 
 ### Prerequisites
 
-- **uv** — `curl -LsSf https://astral.sh/uv/install.sh | sh`
 - An OpenAI-compatible API key (DashScope, OpenRouter, or local llama.cpp)
 
 ### Install
 
 ```bash
+pip install locotrainer
+```
+
+### Configure
+
+```bash
+export LOCOTRAINER_API_KEY=your-api-key
+export LOCOTRAINER_BASE_URL=https://api.openai.com/v1  # or your endpoint
+export LOCOTRAINER_MODEL=gpt-4o
+```
+
+Or use a `.env` file (clone the repo for the template):
+
+```bash
 git clone https://github.com/LocoreMind/LocoTrainer.git
-cd LocoTrainer
-cp .env.example .env
+cd LocoTrainer && cp .env.example .env
 # Edit .env with your API key
-uv sync
 ```
 
 ### Run (auto-clones ms-swift on first use)
 
 ```bash
-uv run locotrainer run -q "What are the default LoRA settings in ms-swift?"
+locotrainer run -q "What are the default LoRA settings in ms-swift?"
 # → output/output.md
 ```
 
@@ -141,12 +153,12 @@ uv run locotrainer run -q "What are the default LoRA settings in ms-swift?"
 # Start local server
 ./llama-server -m LocoTrainer-4B.gguf --ctx-size 51200 --port 8080
 
-# Point LocoTrainer at it
-LOCOTRAINER_BASE_URL=http://localhost:8080/v1
-LOCOTRAINER_MODEL=LocoTrainer-4B
-LOCOTRAINER_API_KEY=local
+# Configure and run
+export LOCOTRAINER_BASE_URL=http://localhost:8080/v1
+export LOCOTRAINER_MODEL=LocoTrainer-4B
+export LOCOTRAINER_API_KEY=local
 
-uv run locotrainer run -q "How does ms-swift implement GRPO training?"
+locotrainer run -q "How does ms-swift implement GRPO training?"
 ```
 
 ### With DashScope (Qwen3-Coder-Next)
