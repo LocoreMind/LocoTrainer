@@ -1,0 +1,21 @@
+[project]
+name = "locotrainer"
+version = "0.1.0"
+description = "Lightweight code agent that explores codebases and generates analysis reports via OpenAI-compatible APIs"
+readme = "README.md"
+authors = [
+    { name = "MaShijian", email = "1395908069@qq.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "openai>=1.0",
+    "python-dotenv>=1.0",
+    "click>=8.0",
+]
+
+[project.scripts]
+locotrainer = "locotrainer.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.9.8,<0.10.0"]
+build-backend = "uv_build"
