@@ -122,17 +122,48 @@ Evaluated on MS-SWIFT codebase analysis tasks across 3 test iterations.
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: One-Line Setup (Recommended)
+
+We provide automated setup scripts for different scenarios:
+
+**For most users (cloud API)**:
+```bash
+curl -O https://raw.githubusercontent.com/LocoreMind/LocoTrainer/main/scripts/setup_locotrainer.sh
+chmod +x setup_locotrainer.sh
+./setup_locotrainer.sh
+```
+
+**For GPU users (local vLLM + LocoTrainer-4B)**:
+```bash
+curl -O https://raw.githubusercontent.com/LocoreMind/LocoTrainer/main/scripts/setup_locotrainer_vllm.sh
+chmod +x setup_locotrainer_vllm.sh
+./setup_locotrainer_vllm.sh
+```
+
+**For developers (from source)**:
+```bash
+git clone https://github.com/LocoreMind/LocoTrainer.git
+cd LocoTrainer
+./scripts/setup_locotrainer_dev.sh
+```
+
+See [scripts/README.md](scripts/README.md) for detailed documentation.
+
+---
+
+### Option 2: Manual Installation
+
+#### Prerequisites
 
 - An OpenAI-compatible API key (DashScope, OpenRouter, or local llama.cpp)
 
-### Install
+#### Install
 
 ```bash
 pip install locotrainer
 ```
 
-### Configure
+#### Configure
 
 ```bash
 export LOCOTRAINER_API_KEY=your-api-key
