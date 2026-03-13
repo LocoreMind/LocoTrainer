@@ -46,12 +46,12 @@ fi
 
 # Activate and install
 source "$VENV_PATH/bin/activate"
-echo "→ Installing transformers 5.2.0 (required for LocoTrainer-4B)..."
-uv pip install transformers==5.2.0 -q
 echo "→ Installing vLLM (this may take several minutes)..."
 uv pip install vllm -q
 echo "→ Installing locotrainer..."
 uv pip install locotrainer -q
+echo "→ Upgrading transformers to 5.2.0 (required for LocoTrainer-4B)..."
+uv pip install transformers==5.2.0 -q
 
 # Verify
 echo ""
