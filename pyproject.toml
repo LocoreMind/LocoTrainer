@@ -1,6 +1,6 @@
 [project]
 name = "locotrainer"
-version = "0.1.0"
+version = "0.1.1"
 description = "Lightweight code agent that explores codebases and generates analysis reports via OpenAI-compatible APIs"
 readme = "README.md"
 authors = [

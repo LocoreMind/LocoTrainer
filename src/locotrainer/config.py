@@ -19,6 +19,12 @@ class Config:
     max_tokens: int = 8192
     max_turns: int = 20
 
+    # Sampling parameters
+    temperature: float = 0.7
+    top_p: float = 0.9
+    frequency_penalty: float = 0.0
+    presence_penalty: float = 0.0
+
     # Paths
     codebase: str = "."
     output_dir: str = "./output"
@@ -41,6 +47,10 @@ class Config:
         cfg.thinking_budget = int(os.getenv("LOCOTRAINER_THINKING_BUDGET", str(cfg.thinking_budget)))
         cfg.max_tokens = int(os.getenv("LOCOTRAINER_MAX_TOKENS", str(cfg.max_tokens)))
         cfg.max_turns = int(os.getenv("LOCOTRAINER_MAX_TURNS", str(cfg.max_turns)))
+        cfg.temperature = float(os.getenv("LOCOTRAINER_TEMPERATURE", str(cfg.temperature)))
+        cfg.top_p = float(os.getenv("LOCOTRAINER_TOP_P", str(cfg.top_p)))
+        cfg.frequency_penalty = float(os.getenv("LOCOTRAINER_FREQUENCY_PENALTY", str(cfg.frequency_penalty)))
+        cfg.presence_penalty = float(os.getenv("LOCOTRAINER_PRESENCE_PENALTY", str(cfg.presence_penalty)))
         cfg.codebase = os.getenv("LOCOTRAINER_CODEBASE", cfg.codebase)
         cfg.output_dir = os.getenv("LOCOTRAINER_OUTPUT_DIR", cfg.output_dir)
 
