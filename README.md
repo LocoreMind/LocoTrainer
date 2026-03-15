@@ -156,7 +156,7 @@ See [scripts/README.md](scripts/README.md) for detailed documentation.
 
 #### Prerequisites
 
-- An OpenAI-compatible API key (DashScope, OpenRouter, or local llama.cpp)
+- An OpenAI-compatible API key (DashScope, MiniMax, OpenRouter, or local llama.cpp)
 
 #### Install
 
@@ -200,6 +200,16 @@ export LOCOTRAINER_API_KEY=local
 
 locotrainer run -q "How does ms-swift implement GRPO training?"
 ```
+
+### With MiniMax (MiniMax-M2.5)
+
+```env
+MINIMAX_API_KEY=your-minimax-key
+LOCOTRAINER_BASE_URL=https://api.minimax.io/v1
+LOCOTRAINER_MODEL=MiniMax-M2.5
+```
+
+MiniMax-M2.5 offers 204K context window and is OpenAI-compatible. For faster inference, use `MiniMax-M2.5-highspeed`. Note: MiniMax requires temperature > 0 — the framework handles this automatically.
 
 ### With DashScope (Qwen3-Coder-Next)
 
@@ -260,7 +270,7 @@ LocoTrainer/
 
 | Env Variable | Default | Description |
 |:-------------|:--------|:------------|
-| `LOCOTRAINER_API_KEY` | (required) | API key (falls back to `OPENAI_API_KEY`) |
+| `LOCOTRAINER_API_KEY` | (required) | API key (falls back to `MINIMAX_API_KEY`, then `OPENAI_API_KEY`) |
 | `LOCOTRAINER_BASE_URL` | `https://api.openai.com/v1` | OpenAI-compatible endpoint |
 | `LOCOTRAINER_MODEL` | `gpt-4o` | Model name |
 | `LOCOTRAINER_MAX_TURNS` | `20` | Max agent loop turns |

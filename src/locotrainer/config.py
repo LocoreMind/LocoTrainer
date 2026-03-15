@@ -7,6 +7,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
+def _is_minimax(base_url: str, model: str) -> bool:
+    """Check if the configuration targets MiniMax API."""
+    return "minimax" in base_url.lower() or model.lower().startswith("minimax")
+
+
 @dataclass
 class Config:
     # API settings (OpenAI-compatible)
@@ -41,7 +46,10 @@ class Config:
             load_dotenv()
 
         cfg = cls()
-        cfg.api_key = os.getenv("LOCOTRAINER_API_KEY", os.getenv("OPENAI_API_KEY", ""))
+        cfg.api_key = os.getenv(
+            "LOCOTRAINER_API_KEY",
+            os.getenv("MINIMAX_API_KEY", os.getenv("OPENAI_API_KEY", "")),
+        )
         cfg.base_url = os.getenv("LOCOTRAINER_BASE_URL", os.getenv("OPENAI_BASE_URL", cfg.base_url))
         cfg.model = os.getenv("LOCOTRAINER_MODEL", cfg.model)
         cfg.thinking_budget = int(os.getenv("LOCOTRAINER_THINKING_BUDGET", str(cfg.thinking_budget)))
@@ -61,5 +69,9 @@ class Config:
                 "enable_thinking": True,
                 "thinking_budget": cfg.thinking_budget,
             }
+
+        # MiniMax requires temperature in (0.0, 1.0] — clamp if needed
+        if _is_minimax(cfg.base_url, cfg.model) and cfg.temperature <= 0.0:
+            cfg.temperature = 0.01
 
         return cfg
