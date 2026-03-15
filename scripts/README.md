@@ -8,7 +8,7 @@ This directory contains setup scripts for different LocoTrainer deployment scena
 
 Installs LocoTrainer CLI with uv for use with external API providers.
 
-**Use case**: You want to use LocoTrainer with OpenAI, DashScope, OpenRouter, or other cloud APIs.
+**Use case**: You want to use LocoTrainer with OpenAI, DashScope, MiniMax, OpenRouter, or other cloud APIs.
 
 **Requirements**: Python 3.10+
 
