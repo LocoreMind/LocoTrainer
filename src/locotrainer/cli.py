@@ -8,7 +8,7 @@ from pathlib import Path
 import click
 
 from .agent import run_agent
-from .config import Config
+from .config import PROVIDERS, Config
 from .repo import ensure_repo
 
 
@@ -36,13 +36,27 @@ def main():
 @click.option("--model", "-m", default=None, help="Model name. Overrides .env.")
 @click.option("--api-key", default=None, help="API key. Overrides .env.")
 @click.option("--base-url", default=None, help="API base URL. Overrides .env.")
+@click.option("--provider", "-p", default=None, type=click.Choice(list(PROVIDERS)),
+              help="Provider preset (sets base URL and default model).")
 @click.option("--max-turns", default=None, type=int, help="Max conversation turns.")
 @click.option("--env-file", default=None, help="Path to .env file.")
 @click.option("--save-trajectory", is_flag=True, default=True, help="Save full trajectory JSON.")
 @click.option("--quiet", is_flag=True, help="Suppress verbose output.")
-def run(query, codebase, output, model, api_key, base_url, max_turns, env_file, save_trajectory, quiet):
+def run(query, codebase, output, model, api_key, base_url, provider, max_turns, env_file, save_trajectory, quiet):
     """Run the agent on a query against a codebase."""
     config = Config.from_env(env_file)
+
+    # CLI provider preset (overrides env-based provider)
+    if provider and provider in PROVIDERS:
+        preset = PROVIDERS[provider]
+        config.base_url = preset["base_url"]
+        config.model = preset["model"]
+        # Try provider-specific API key if no explicit key given
+        if not api_key:
+            import os
+            provider_key = os.getenv(preset["api_key_env"], "")
+            if provider_key:
+                config.api_key = provider_key
 
     # CLI overrides
     if output:
