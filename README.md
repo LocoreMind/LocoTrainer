@@ -156,7 +156,7 @@ See [scripts/README.md](scripts/README.md) for detailed documentation.
 
 #### Prerequisites
 
-- An OpenAI-compatible API key (DashScope, OpenRouter, or local llama.cpp)
+- An OpenAI-compatible API key (DashScope, OpenRouter, MiniMax, or local llama.cpp)
 
 #### Install
 
@@ -209,6 +209,21 @@ LOCOTRAINER_BASE_URL=https://dashscope-intl.aliyuncs.com/compatible-mode/v1
 LOCOTRAINER_MODEL=qwen3-coder-next
 LOCOTRAINER_ENABLE_THINKING=true
 ```
+
+### With MiniMax
+
+```env
+LOCOTRAINER_API_KEY=your-minimax-api-key
+LOCOTRAINER_BASE_URL=https://api.minimax.io/v1
+LOCOTRAINER_MODEL=MiniMax-M2.7
+LOCOTRAINER_TEMPERATURE=0.7
+```
+
+Available MiniMax models:
+- `MiniMax-M2.7` — latest flagship model with enhanced reasoning and coding
+- `MiniMax-M2.7-highspeed` — high-speed version of M2.7 for low-latency scenarios
+- `MiniMax-M2.5` — previous flagship model with 204K context window
+- `MiniMax-M2.5-highspeed` — faster variant optimized for throughput
 
 ## 🔧 Usage Examples
 
