@@ -7,6 +7,32 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
+# ── Provider Presets ─────────────────────────────────────────────────────
+# Each preset defines base_url, default model, and the env var for API key.
+PROVIDERS: dict[str, dict[str, str]] = {
+    "openai": {
+        "base_url": "https://api.openai.com/v1",
+        "model": "gpt-4o",
+        "api_key_env": "OPENAI_API_KEY",
+    },
+    "dashscope": {
+        "base_url": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+        "model": "qwen3-coder-next",
+        "api_key_env": "DASHSCOPE_API_KEY",
+    },
+    "openrouter": {
+        "base_url": "https://openrouter.ai/api/v1",
+        "model": "openai/gpt-4o",
+        "api_key_env": "OPENROUTER_API_KEY",
+    },
+    "minimax": {
+        "base_url": "https://api.minimax.io/v1",
+        "model": "MiniMax-M2.7",
+        "api_key_env": "MINIMAX_API_KEY",
+    },
+}
+
+
 @dataclass
 class Config:
     # API settings (OpenAI-compatible)
@@ -41,7 +67,20 @@ class Config:
             load_dotenv()
 
         cfg = cls()
-        cfg.api_key = os.getenv("LOCOTRAINER_API_KEY", os.getenv("OPENAI_API_KEY", ""))
+
+        # Apply provider preset if set (before explicit overrides)
+        provider = os.getenv("LOCOTRAINER_PROVIDER", "").lower()
+        if provider and provider in PROVIDERS:
+            preset = PROVIDERS[provider]
+            cfg.base_url = preset["base_url"]
+            cfg.model = preset["model"]
+            # Try provider-specific API key env var
+            provider_key = os.getenv(preset["api_key_env"], "")
+            if provider_key:
+                cfg.api_key = provider_key
+
+        # Explicit env vars override provider defaults
+        cfg.api_key = os.getenv("LOCOTRAINER_API_KEY", os.getenv("OPENAI_API_KEY", cfg.api_key))
         cfg.base_url = os.getenv("LOCOTRAINER_BASE_URL", os.getenv("OPENAI_BASE_URL", cfg.base_url))
         cfg.model = os.getenv("LOCOTRAINER_MODEL", cfg.model)
         cfg.thinking_budget = int(os.getenv("LOCOTRAINER_THINKING_BUDGET", str(cfg.thinking_budget)))

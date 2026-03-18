@@ -156,7 +156,7 @@ See [scripts/README.md](scripts/README.md) for detailed documentation.
 
 #### Prerequisites
 
-- An OpenAI-compatible API key (DashScope, OpenRouter, or local llama.cpp)
+- An OpenAI-compatible API key (DashScope, OpenRouter, MiniMax, or local llama.cpp)
 
 #### Install
 
@@ -201,6 +201,22 @@ export LOCOTRAINER_API_KEY=local
 locotrainer run -q "How does ms-swift implement GRPO training?"
 ```
 
+### With MiniMax
+
+```bash
+export MINIMAX_API_KEY=your-minimax-key
+locotrainer run --provider minimax -q "How does ms-swift implement GRPO training?"
+```
+
+Or via `.env`:
+
+```env
+LOCOTRAINER_PROVIDER=minimax
+LOCOTRAINER_API_KEY=your-minimax-key
+```
+
+MiniMax offers the `MiniMax-M2.7` model (latest flagship with enhanced reasoning and coding) — well suited for large codebase analysis tasks. For lower latency, use `MiniMax-M2.7-highspeed`. See [MiniMax Platform](https://platform.minimaxi.com/) for API keys.
+
 ### With DashScope (Qwen3-Coder-Next)
 
 ```env
@@ -235,6 +251,7 @@ locotrainer run \
   -c /path/to/codebase \    # optional, default: auto-clone ms-swift
   -o ./output \             # optional, default: ./output
   -m model-name \           # optional, overrides .env
+  -p minimax \              # optional, provider preset
   --max-turns 20 \          # optional, default: 20
   --quiet                   # suppress verbose output
 ```
@@ -260,9 +277,10 @@ LocoTrainer/
 
 | Env Variable | Default | Description |
 |:-------------|:--------|:------------|
-| `LOCOTRAINER_API_KEY` | (required) | API key (falls back to `OPENAI_API_KEY`) |
+| `LOCOTRAINER_API_KEY` | (required) | API key (falls back to provider-specific env var, then `OPENAI_API_KEY`) |
 | `LOCOTRAINER_BASE_URL` | `https://api.openai.com/v1` | OpenAI-compatible endpoint |
 | `LOCOTRAINER_MODEL` | `gpt-4o` | Model name |
+| `LOCOTRAINER_PROVIDER` | — | Provider preset: `openai`, `dashscope`, `openrouter`, `minimax` |
 | `LOCOTRAINER_MAX_TURNS` | `20` | Max agent loop turns |
 | `LOCOTRAINER_MAX_TOKENS` | `8192` | Max tokens per response |
 | `LOCOTRAINER_ENABLE_THINKING` | `false` | Enable thinking mode (Qwen3) |
