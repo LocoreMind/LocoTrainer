@@ -215,7 +215,7 @@ LOCOTRAINER_PROVIDER=minimax
 LOCOTRAINER_API_KEY=your-minimax-key
 ```
 
-MiniMax offers the `MiniMax-M2.5` model with 204K context window — well suited for large codebase analysis tasks. See [MiniMax Platform](https://platform.minimaxi.com/) for API keys.
+MiniMax offers the `MiniMax-M2.7` model (latest flagship with enhanced reasoning and coding) — well suited for large codebase analysis tasks. For lower latency, use `MiniMax-M2.7-highspeed`. See [MiniMax Platform](https://platform.minimaxi.com/) for API keys.
 
 ### With DashScope (Qwen3-Coder-Next)
 
